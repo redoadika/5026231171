@@ -23,3 +23,35 @@ Route::get('hello', [Link::class,'helloword'] );
 Route::get('pertama', function () {
 	return view('pertama');
 });
+
+Route::get('index', function () {
+	return view('index');
+});
+
+Route::get('bootstrap1', function () {
+	return view('bootstrap1');
+});
+
+Route::get('frontend', function () {
+	return view('frontend');
+});
+
+Route::get('js1', function () {
+	return view('js1');
+});
+
+Route::get('js2', function () {
+	return view('js2');
+});
+
+Route::get('latihanlayout', function () {
+	return view('latihanlayout');
+});
+
+Route::get('template1', function () {
+	return view('template1');
+});
+
+Route::get('tugaslinktree', function () {
+	return view('tugaslinktree');
+});
