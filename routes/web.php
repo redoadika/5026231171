@@ -5,6 +5,7 @@ use App\Http\Controllers\Link ;
 use App\Http\Controllers\Pegawai2Controller ;
 use App\Http\Controllers\BlogController ;
 use App\Http\Controllers\PegawaiController ;
+use App\Http\Controllers\VgaController;
 
 // import java.io :
 // System.out.println() :
@@ -79,3 +80,12 @@ Route::get('/pegawai/edit/{id}',[PegawaiController::class, 'edit']);
 Route::post('/pegawai/update',[PegawaiController::class, 'update']);
 Route::get('/pegawai/hapus/{id}',[PegawaiController::class, 'hapus']);
 Route::get('/pegawai/cari',[PegawaiController::class, 'cari']);
+
+// route vga
+Route::get('/vga', [VgaController::class, 'index']);            // Menampilkan daftar VGA
+Route::get('/vga/tambah', [VgaController::class, 'tambah']);    // Menampilkan form tambah
+Route::post('/vga/store', [VgaController::class, 'store']);    // Menyimpan data baru
+Route::get('/vga/edit/{id}', [VgaController::class, 'edit']);  // Menampilkan form edit
+Route::post('/vga/update', [VgaController::class, 'update']);  // Memperbarui data
+Route::get('/vga/hapus/{id}', [VgaController::class, 'hapus']); // Menghapus data
+Route::get('/vga/cari', [VgaController::class, 'cari']);       // Mencari data VGA
