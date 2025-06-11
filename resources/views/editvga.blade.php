@@ -14,20 +14,21 @@
     <br/>
     <br/>
 
-    @foreach($vga as $item) {{-- Menggunakan $item karena Anda mengirim koleksi dari Controller --}}
+    {{-- HAPUS @foreach($vga as $item) --}}
     <form action="/vga/update" method="post">
         {{ csrf_field() }}
-        <input type="hidden" name="ID" value="{{ $item->ID }}"> <br/> {{-- Pastikan nama "ID" sesuai dengan kolom DB --}}
-        Merk VGA <input type="text" required="required" name="merkVGA" value="{{ $item->merkVGA }}"> <br/>
-        Harga <input type="number" required="required" name="hargaVGA" value="{{ $item->hargaVGA }}"> <br/>
+        {{-- Sekarang langsung akses properti dari $vga --}}
+        <input type="hidden" name="ID" value="{{ $vga->ID }}"> <br/>
+        Merk VGA <input type="text" required="required" name="merkVGA" value="{{ $vga->merkVGA }}"> <br/>
+        Harga <input type="number" required="required" name="hargaVGA" value="{{ $vga->hargaVGA }}"> <br/>
         Tersedia <select required="required" name="tersedia">
-            <option value="1" {{ $item->tersedia == 1 ? 'selected' : '' }}>Ya</option>
-            <option value="0" {{ $item->tersedia == 0 ? 'selected' : '' }}>Tidak</option>
+            <option value="1" {{ $vga->tersedia == 1 ? 'selected' : '' }}>Ya</option>
+            <option value="0" {{ $vga->tersedia == 0 ? 'selected' : '' }}>Tidak</option>
         </select> <br/>
-        Berat (kg) <input type="text" required="required" name="berat" value="{{ $item->berat }}"> <br/>
+        Berat (kg) <input type="text" required="required" name="berat" value="{{ $vga->berat }}"> <br/>
         <input type="submit" value="Simpan Data">
     </form>
-    @endforeach
+    {{-- HAPUS @endforeach --}}
 
 </body>
 </html>

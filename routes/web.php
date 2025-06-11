@@ -6,6 +6,7 @@ use App\Http\Controllers\Pegawai2Controller ;
 use App\Http\Controllers\BlogController ;
 use App\Http\Controllers\PegawaiController ;
 use App\Http\Controllers\VgaController;
+use App\Http\Controllers\KaryawanController;
 
 // import java.io :
 // System.out.println() :
@@ -81,7 +82,7 @@ Route::post('/pegawai/update',[PegawaiController::class, 'update']);
 Route::get('/pegawai/hapus/{id}',[PegawaiController::class, 'hapus']);
 Route::get('/pegawai/cari',[PegawaiController::class, 'cari']);
 
-// route vga
+//crud vga
 Route::get('/vga', [VgaController::class, 'index']);            // Menampilkan daftar VGA
 Route::get('/vga/tambah', [VgaController::class, 'tambah']);    // Menampilkan form tambah
 Route::post('/vga/store', [VgaController::class, 'store']);    // Menyimpan data baru
@@ -89,3 +90,9 @@ Route::get('/vga/edit/{id}', [VgaController::class, 'edit']);  // Menampilkan fo
 Route::post('/vga/update', [VgaController::class, 'update']);  // Memperbarui data
 Route::get('/vga/hapus/{id}', [VgaController::class, 'hapus']); // Menghapus data
 Route::get('/vga/cari', [VgaController::class, 'cari']);       // Mencari data VGA
+
+//crud karyawan
+Route::get('/karyawan', [KaryawanController::class, 'index']);
+Route::get('/karyawan/tambah', [KaryawanController::class, 'tambah']);
+Route::post('/karyawan/store', [KaryawanController::class, 'store']);
+Route::get('/karyawan/hapus/{kodepegawai}', [KaryawanController::class, 'hapus']); // Parameter harus 'kodepegawai'

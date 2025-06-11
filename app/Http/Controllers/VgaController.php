@@ -3,59 +3,62 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; // Pastikan ini ada
-// use App\Models\VGA; // Ini tidak diperlukan jika semua pakai DB::table()
+use Illuminate\Support\Facades\DB; // Pastikan ini di-import karena kita akan pakai Query Builder
 
 class VgaController extends Controller
 {
     public function index()
     {
-        // mengambil data dari table VGA dengan pagination
-        $vga = DB::table('vga')->paginate(5); // 5 data per halaman
+        // Mengambil data dari tabel 'vga' dengan pagination
+        $vga = DB::table('vga')->paginate(5); // Menampilkan 5 data per halaman
 
-        // mengirim data VGA ke view index2vga
+        // Mengirim data VGA ke view index2vga
         return view('index2vga', ['vga' => $vga]);
     }
 
-    // method untuk menampilkan view form tambah VGA
+    // Method untuk menampilkan view form tambah VGA
     public function tambah()
     {
-        // memanggil view vga_tambah
+        // Memanggil view tambahvga
         return view('tambahvga');
     }
 
-    // method untuk insert data ke table VGA
+    // Method untuk insert data ke table VGA
     public function store(Request $request)
     {
-        // Validasi input (penting walaupun pakai DB::table)
+        // Validasi input (sangat disarankan tetap ada)
         $request->validate([
             'merkVGA' => 'required|string|max:25',
             'hargaVGA' => 'required|integer|min:0',
-            'tersedia' => 'required|boolean', // Pastikan input ini mengirim 0 atau 1
+            'tersedia' => 'required|boolean',
             'berat' => 'required|numeric|min:0',
         ]);
 
-        // insert data ke table VGA
+        // Insert data ke tabel 'vga' menggunakan Query Builder
         DB::table('vga')->insert([
             'merkVGA' => $request->merkVGA,
             'hargaVGA' => $request->hargaVGA,
-            'tersedia' => $request->tersedia,
+            'tersedia' => $request->tersedia, // Laravel akan mengonversi boolean ke 0/1 untuk DB
             'berat' => $request->berat
         ]);
-        // alihkan halaman ke halaman VGA
+
+        // Alihkan halaman ke halaman VGA dengan pesan sukses
         return redirect('/vga')->with('success', 'Data VGA berhasil ditambahkan!');
     }
 
-    // method untuk edit data VGA
+    // Method untuk edit data VGA
     public function edit($id)
     {
-        // mengambil data VGA berdasarkan id yang dipilih
-        $vga = DB::table('vga')->where('ID', $id)->get(); // Kolom ID bukan id
-        // passing data VGA yang didapat ke view vga_edit.blade.php
-        return view('editvga', ['vga' => $vga]); // Ambil elemen pertama dari koleksi karena get() mengembalikan koleksi
+        // Mengambil data VGA berdasarkan ID yang dipilih menggunakan Query Builder
+        $vga = DB::table('vga')->where('ID', $id)->get(); // 'ID' adalah primary key tabel VGA
+
+        // Passing data VGA yang didapat ke view editvga.blade.php
+        // Karena get() mengembalikan koleksi, kita ambil elemen pertamanya ([0])
+        // agar di view bisa langsung `$vga->properti` tanpa foreach
+        return view('editvga', ['vga' => $vga[0]]);
     }
 
-    // update data VGA
+    // Update data VGA
     public function update(Request $request)
     {
         // Validasi input
@@ -66,39 +69,41 @@ class VgaController extends Controller
             'berat' => 'required|numeric|min:0',
         ]);
 
-        // update data VGA
-        DB::table('vga')->where('ID', $request->ID)->update([ // Kolom ID bukan id
+        // Update data VGA menggunakan Query Builder
+        DB::table('vga')->where('ID', $request->ID)->update([ // 'ID' adalah primary key dari form hidden
             'merkVGA' => $request->merkVGA,
             'hargaVGA' => $request->hargaVGA,
             'tersedia' => $request->tersedia,
             'berat' => $request->berat
         ]);
-        // alihkan halaman ke halaman VGA
+
+        // Alihkan halaman ke halaman VGA dengan pesan sukses
         return redirect('/vga')->with('success', 'Data VGA berhasil diperbarui!');
     }
 
-    // method untuk hapus data VGA
+    // Method untuk hapus data VGA
     public function hapus($id)
     {
-        // menghapus data VGA berdasarkan id yang dipilih
-        DB::table('vga')->where('ID', $id)->delete(); // Kolom ID bukan id
+        // Menghapus data VGA berdasarkan ID yang dipilih menggunakan Query Builder
+        DB::table('vga')->where('ID', $id)->delete(); // 'ID' adalah primary key tabel VGA
 
-        // alihkan halaman ke halaman VGA
+        // Alihkan halaman ke halaman VGA dengan pesan sukses
         return redirect('/vga')->with('success', 'Data VGA berhasil dihapus!');
     }
 
+    // Mencari data VGA
     public function cari(Request $request)
     {
-        // menangkap data pencarian
+        // Menangkap data pencarian
         $cari = $request->cari;
 
-        // mengambil data dari table VGA sesuai pencarian data
+        // Mengambil data dari tabel 'vga' sesuai pencarian data menggunakan Query Builder
         $vga = DB::table('vga')
             ->where('merkVGA', 'like', "%" . $cari . "%")
             ->orWhere('ID', 'like', "%" . $cari . "%") // Tambahkan pencarian berdasarkan ID juga
             ->paginate(5); // Pagination untuk hasil pencarian
 
-        // mengirim data VGA ke view index2vga
+        // Mengirim data VGA ke view index2vga
         return view('index2vga', ['vga' => $vga, 'cari' => $cari]);
     }
 }
