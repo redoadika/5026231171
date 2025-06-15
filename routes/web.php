@@ -7,6 +7,7 @@ use App\Http\Controllers\BlogController ;
 use App\Http\Controllers\PegawaiController ;
 use App\Http\Controllers\VgaController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\KeranjangBelanjaController;
 
 // import java.io :
 // System.out.println() :
@@ -95,4 +96,10 @@ Route::get('/vga/cari', [VgaController::class, 'cari']);       // Mencari data V
 Route::get('/karyawan', [KaryawanController::class, 'index']);
 Route::get('/karyawan/tambah', [KaryawanController::class, 'tambah']);
 Route::post('/karyawan/store', [KaryawanController::class, 'store']);
-Route::get('/karyawan/hapus/{kodepegawai}', [KaryawanController::class, 'hapus']); // Parameter harus 'kodepegawai'
+Route::get('/karyawan/hapus/{kodepegawai}', [KaryawanController::class, 'hapus']);
+
+//crud keranjangbelanja
+Route::get('/keranjangbelanja', [KeranjangBelanjaController::class, 'index']);
+Route::get('/keranjangbelanja/tambah', [KeranjangBelanjaController::class, 'tambah']);
+Route::post('/keranjangbelanja/store', [KeranjangBelanjaController::class, 'store']);
+Route::get('/keranjangbelanja/hapus/{id}', [KeranjangBelanjaController::class, 'hapus']);
