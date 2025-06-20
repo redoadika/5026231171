@@ -8,6 +8,7 @@ use App\Http\Controllers\PegawaiController ;
 use App\Http\Controllers\VgaController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KeranjangBelanjaController;
+use App\Http\Controllers\NilaiController;
 
 // import java.io :
 // System.out.println() :
@@ -103,3 +104,9 @@ Route::get('/keranjangbelanja', [KeranjangBelanjaController::class, 'index']);
 Route::get('/keranjangbelanja/tambah', [KeranjangBelanjaController::class, 'tambah']);
 Route::post('/keranjangbelanja/store', [KeranjangBelanjaController::class, 'store']);
 Route::get('/keranjangbelanja/hapus/{id}', [KeranjangBelanjaController::class, 'hapus']);
+
+//crud nilai
+Route::get('/eas', [NilaiController::class, 'index']);
+Route::get('/eas/tambah', [NilaiController::class, 'tambah']);
+Route::post('/eas/store', [NilaiController::class, 'store']);
+Route::get('/eas/hapus/{id}', [NilaiController::class, 'hapus']);
